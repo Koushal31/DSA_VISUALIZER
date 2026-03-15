@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sorting — DSAViz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">DSA Visualizer</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="linked-list.html">Linked List</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="queue.html">Queue</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right"></div>
+  <button class="theme-btn" id="theme-toggle" style="margin-left:8px">☾</button>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <h1>Sorting Algorithms</h1>
+      <p>Animated bar chart with live code highlighting and Big-O reference</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge" id="hdr-algo">Bubble Sort</span>
+      <span class="badge" id="hdr-best">Best: O(n)</span>
+      <span class="badge" id="hdr-avg">Avg: O(n²)</span>
+      <span class="badge" id="hdr-worst">Worst: O(n²)</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls-bar">
+  <div class="controls-inner">
+    <span class="ctrl-label">Algorithm</span>
+    <select class="ctrl-select" id="algo-select" onchange="onAlgoChange()">
+      <option value="bubble">Bubble Sort</option>
+      <option value="selection">Selection Sort</option>
+      <option value="insertion">Insertion Sort</option>
+      <option value="merge">Merge Sort</option>
+      <option value="quick">Quick Sort</option>
+    </select>
+    <span class="ctrl-label">Array</span>
+    <input class="ctrl-input" type="text" id="array-input" value="5,3,8,1,9,2,7,4,6" style="width:185px"/>
+    <button class="btn btn-sm" onclick="applyInput()">Apply</button>
+    <button class="btn btn-sm" onclick="randomArray()">Random</button>
+    <div class="ctrl-sep"></div>
+    <span class="ctrl-label">Speed</span>
+    <input type="range" class="speed-range" id="speed" min="1" max="10" value="5"/>
+    <span id="speed-val" style="font-family:var(--mono);font-size:11px;color:var(--text-muted);min-width:12px">5</span>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-dark btn-sm" id="btn-run" onclick="runSort()">▶ Run</button>
+    <button class="btn btn-sm" id="btn-pause" onclick="pauseSort()" disabled>⏸ Pause</button>
+    <button class="btn btn-sm" onclick="resetSort()">↺ Reset</button>
+  </div>
+</div>
+
+<div class="view-tabs">
+  <button class="view-tab active" onclick="switchView('visualize', this)">Visualize</button>
+  <button class="view-tab" onclick="switchView('compare', this)">Compare All</button>
+</div>
+
+<!-- Visualize View -->
+<div id="view-visualize" class="view-content active">
+  <div class="page-body">
+    <div class="two-col">
+      <!-- Left: bars -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title" id="viz-title">Bubble Sort</span>
+          <span class="badge" id="viz-ops">0 ops</span>
+        </div>
+        <div class="bar-area">
+          <div class="bars" id="bars"></div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-box" style="background:var(--gray-300)"></div>Unsorted</div>
+          <div class="legend-item"><div class="legend-box" style="background:var(--gray-600)"></div>Comparing</div>
+          <div class="legend-item"><div class="legend-box" style="background:var(--gray-800)"></div>Swapping</div>
+          <div class="legend-item"><div class="legend-box" style="background:var(--gray-500)"></div>Pivot</div>
+          <div class="legend-item"><div class="legend-box" style="background:var(--black)"></div>Sorted</div>
+        </div>
+        <div class="status-line" id="status-line">Ready — press ▶ Run to start</div>
+      </div>
+
+      <!-- Right: code + complexity -->
+      <div class="right">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Pseudocode</span></div>
+          <div class="code-block" id="code-block"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Complexity</span></div>
+          <div class="complexity-grid" id="complexity-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Big-O table -->
+    <div class="card mt-20">
+      <div class="card-header"><span class="card-title">Big-O Reference Table</span></div>
+      <table class="bigo-table">
+        <thead>
+          <tr>
+            <th>Algorithm</th><th>Best Case</th><th>Average</th>
+            <th>Worst Case</th><th>Space</th><th>Stable</th>
+          </tr>
+        </thead>
+        <tbody id="bigo-body">
+          <tr data-algo="bubble">   <td>Bubble Sort</td>   <td class="mono">O(n)</td>      <td class="mono">O(n²)</td>     <td class="mono">O(n²)</td>     <td class="mono">O(1)</td>     <td>Yes</td></tr>
+          <tr data-algo="selection"><td>Selection Sort</td><td class="mono">O(n²)</td>     <td class="mono">O(n²)</td>     <td class="mono">O(n²)</td>     <td class="mono">O(1)</td>     <td>No</td></tr>
+          <tr data-algo="insertion"><td>Insertion Sort</td><td class="mono">O(n)</td>      <td class="mono">O(n²)</td>     <td class="mono">O(n²)</td>     <td class="mono">O(1)</td>     <td>Yes</td></tr>
+          <tr data-algo="merge">    <td>Merge Sort</td>    <td class="mono">O(n log n)</td><td class="mono">O(n log n)</td><td class="mono">O(n log n)</td><td class="mono">O(n)</td>     <td>Yes</td></tr>
+          <tr data-algo="quick">    <td>Quick Sort</td>    <td class="mono">O(n log n)</td><td class="mono">O(n log n)</td><td class="mono">O(n²)</td>     <td class="mono">O(log n)</td><td>No</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- How it works -->
+    <div class="card mt-16">
+      <div class="card-header"><span class="card-title" id="how-title">How Bubble Sort Works</span></div>
+      <div class="how-summary" id="how-summary"></div>
+      <div class="how-list" id="how-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Compare View -->
+<div id="view-compare" class="view-content">
+  <div class="page-body">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+      <p style="font-size:13px;color:var(--text-muted)">Runs all 5 algorithms on the same data at the same time</p>
+      <button class="btn btn-dark btn-sm" id="btn-cmp-run" onclick="runCompare()">▶ Run All</button>
+      <button class="btn btn-sm" onclick="resetCompare()">↺ Reset</button>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card"><div class="compare-card-header">Bubble Sort <span class="badge" id="cmp-ops-bubble">0 ops</span></div><div class="compare-bars" id="cmp-bars-bubble"></div><div class="compare-status" id="cmp-status-bubble">ready</div></div>
+      <div class="compare-card"><div class="compare-card-header">Selection Sort <span class="badge" id="cmp-ops-selection">0 ops</span></div><div class="compare-bars" id="cmp-bars-selection"></div><div class="compare-status" id="cmp-status-selection">ready</div></div>
+      <div class="compare-card"><div class="compare-card-header">Insertion Sort <span class="badge" id="cmp-ops-insertion">0 ops</span></div><div class="compare-bars" id="cmp-bars-insertion"></div><div class="compare-status" id="cmp-status-insertion">ready</div></div>
+      <div class="compare-card"><div class="compare-card-header">Merge Sort <span class="badge" id="cmp-ops-merge">0 ops</span></div><div class="compare-bars" id="cmp-bars-merge"></div><div class="compare-status" id="cmp-status-merge">ready</div></div>
+      <div class="compare-card"><div class="compare-card-header">Quick Sort <span class="badge" id="cmp-ops-quick">0 ops</span></div><div class="compare-bars" id="cmp-bars-quick"></div><div class="compare-status" id="cmp-status-quick">ready</div></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">DSA Visualizer — Learn Algorithms Step by Step</footer>
+<script src="js/main.js"></script>
+<script src="js/sorting.js"></script>
+</body>
+</html>

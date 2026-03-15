@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Linked List — DSAViz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">DSA Visualizer</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="linked-list.html">Linked List</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="queue.html">Queue</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right"></div>
+  <button class="theme-btn" id="theme-toggle" style="margin-left:8px">☾</button>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <h1>Linked List</h1>
+      <p>Each node holds a value and a pointer to the next node</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge">Insert Head: O(1)</span>
+      <span class="badge">Insert Tail: O(n)</span>
+      <span class="badge">Delete Head: O(1)</span>
+      <span class="badge">Search: O(n)</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls-bar">
+  <div class="controls-inner">
+    <span class="ctrl-label">Value</span>
+    <input class="ctrl-input" type="text" id="ll-val" placeholder="e.g. 42" maxlength="6" style="width:90px"/>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-dark btn-sm" onclick="llAppend()">Append</button>
+    <button class="btn btn-sm" onclick="llPrepend()">Prepend</button>
+    <div class="ctrl-sep"></div>
+    <span class="ctrl-label">Index</span>
+    <input class="ctrl-input" type="number" id="ll-idx" placeholder="0" min="0" style="width:60px"/>
+    <button class="btn btn-sm" onclick="llInsertAt()">Insert At</button>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-sm" onclick="llRemoveHead()">Remove Head</button>
+    <button class="btn btn-sm" onclick="llRemoveTail()">Remove Tail</button>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-sm" onclick="llSearch()">Search</button>
+    <button class="btn btn-sm" onclick="llReverse()">Reverse</button>
+    <button class="btn btn-sm" onclick="llReset()">↺ Reset</button>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="two-col">
+    <!-- Left: visualization -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Singly Linked List</span>
+        <span class="badge" id="ll-size">5 nodes</span>
+      </div>
+      <div class="op-tabs" id="op-tabs">
+        <button class="op-tab active" id="tab-append">append</button>
+        <button class="op-tab" id="tab-prepend">prepend</button>
+        <button class="op-tab" id="tab-insert">insert at</button>
+        <button class="op-tab" id="tab-remove-head">remove head</button>
+        <button class="op-tab" id="tab-remove-tail">remove tail</button>
+        <button class="op-tab" id="tab-search">search</button>
+        <button class="op-tab" id="tab-reverse">reverse</button>
+      </div>
+      <div class="ll-canvas" id="ll-canvas"></div>
+      <div class="status-line" id="ll-status">Linked list ready</div>
+    </div>
+
+    <!-- Right: code + complexity -->
+    <div class="right">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Pseudocode</span>
+          <span class="badge" id="ll-op-badge">append</span>
+        </div>
+        <div class="code-block" id="ll-code"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Time Complexity</span></div>
+        <table class="info-table">
+          <tr><td>Access by index</td><td>O(n)</td></tr>
+          <tr><td>Insert at head</td><td>O(1)</td></tr>
+          <tr><td>Insert at tail</td><td>O(n)*</td></tr>
+          <tr><td>Delete at head</td><td>O(1)</td></tr>
+          <tr><td>Delete at tail</td><td>O(n)</td></tr>
+          <tr><td>Search</td><td>O(n)</td></tr>
+          <tr><td>Space</td><td>O(n)</td></tr>
+        </table>
+        <p style="font-size:11px;color:var(--text-muted);padding:8px 14px">*O(1) if tail pointer maintained</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="card mt-16">
+    <div class="card-header"><span class="card-title">How Linked Lists Work</span></div>
+    <div class="how-summary">A linked list is a sequence of nodes. Each node stores a value and a pointer to the next node. Unlike arrays, nodes are not stored in contiguous memory — they can be anywhere, connected by pointers.</div>
+    <div class="how-list">
+      <div class="how-item"><div class="how-num">1</div><div class="how-text"><strong>Node structure:</strong> Each node has a <code>data</code> field and a <code>next</code> pointer to the following node.</div></div>
+      <div class="how-item"><div class="how-num">2</div><div class="how-text"><strong>Head pointer:</strong> The list is accessed via a <code>head</code> pointer. The last node's <code>next</code> is <code>null</code>.</div></div>
+      <div class="how-item"><div class="how-num">3</div><div class="how-text"><strong>Traversal:</strong> Start at <code>head</code> and follow <code>next</code> pointers until you reach <code>null</code>.</div></div>
+      <div class="how-item"><div class="how-num">4</div><div class="how-text"><strong>Insert at head:</strong> Create new node, set its <code>next</code> to current head, update head. O(1).</div></div>
+      <div class="how-item"><div class="how-num">5</div><div class="how-text"><strong>Delete a node:</strong> Find the predecessor and redirect its <code>next</code> to skip the deleted node.</div></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">DSA Visualizer — Learn Algorithms Step by Step</footer>
+<script src="js/main.js"></script>
+<script src="js/linked-list.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stack — DSAViz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">DSA Visualizer</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="linked-list.html">Linked List</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="queue.html">Queue</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right"></div>
+  <button class="theme-btn" id="theme-toggle" style="margin-left:8px">☾</button>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <h1>Stack</h1>
+      <p>Last In, First Out (LIFO) — push items on top, pop from the top</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge">Push: O(1)</span>
+      <span class="badge">Pop: O(1)</span>
+      <span class="badge">Peek: O(1)</span>
+      <span class="badge">Space: O(n)</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls-bar">
+  <div class="controls-inner">
+    <span class="ctrl-label">Value</span>
+    <input class="ctrl-input" type="text" id="stack-val" placeholder="e.g. 42" maxlength="6" style="width:90px"/>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-dark btn-sm" onclick="stackPush()">Push</button>
+    <button class="btn btn-sm" onclick="stackPop()">Pop</button>
+    <button class="btn btn-sm" onclick="stackPeek()">Peek</button>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-sm" onclick="stackReset()">↺ Reset</button>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="two-col">
+    <!-- Left: stack visual -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Stack (LIFO)</span>
+        <span class="badge" id="stack-size">3 items</span>
+      </div>
+      <div style="padding:10px 16px 0;font-size:11px;color:var(--text-muted);text-align:center">← top of stack</div>
+      <div class="stack-visual" id="stack-visual">
+        <div class="stack-items" id="stack-items"></div>
+        <div class="stack-base"></div>
+        <div style="font-size:11px;color:var(--text-muted);margin-top:5px;text-align:center">bottom</div>
+      </div>
+      <div class="status-line" id="stack-status">Stack ready — push, pop, or peek</div>
+    </div>
+
+    <!-- Right: code + complexity + uses -->
+    <div class="right">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Pseudocode</span>
+          <span class="badge" id="stack-op">push</span>
+        </div>
+        <div class="code-block" id="stack-code"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Time Complexity</span></div>
+        <table class="info-table">
+          <tr><td>Push</td><td>O(1)</td></tr>
+          <tr><td>Pop</td><td>O(1)</td></tr>
+          <tr><td>Peek</td><td>O(1)</td></tr>
+          <tr><td>Search</td><td>O(n)</td></tr>
+          <tr><td>Space</td><td>O(n)</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Real-world uses</span></div>
+        <div style="padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:13px"><strong>Undo/Redo</strong> — editors push changes, undo pops them</div>
+          <div style="font-size:13px"><strong>Browser history</strong> — back button pops the last page</div>
+          <div style="font-size:13px"><strong>Function calls</strong> — the call stack is literally a stack</div>
+          <div style="font-size:13px"><strong>Expression parsing</strong> — bracket matching uses a stack</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="card mt-16">
+    <div class="card-header"><span class="card-title">How Stacks Work</span></div>
+    <div class="how-summary">A stack is a linear data structure that follows the LIFO (Last In, First Out) principle. Think of a stack of plates — you can only add or remove from the top.</div>
+    <div class="how-list">
+      <div class="how-item"><div class="how-num">1</div><div class="how-text"><strong>Push:</strong> Add an element to the top. O(1) — just place it on top.</div></div>
+      <div class="how-item"><div class="how-num">2</div><div class="how-text"><strong>Pop:</strong> Remove and return the top element. O(1) — the last added is the first removed.</div></div>
+      <div class="how-item"><div class="how-num">3</div><div class="how-text"><strong>Peek:</strong> View the top element without removing it. O(1) — useful to check what's next.</div></div>
+      <div class="how-item"><div class="how-num">4</div><div class="how-text"><strong>Overflow / Underflow:</strong> Pushing to a full stack = overflow. Popping from empty = underflow. Always check first.</div></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">DSA Visualizer — Learn Algorithms Step by Step</footer>
+<script src="js/main.js"></script>
+<script src="js/stack.js"></script>
+</body>
+</html>

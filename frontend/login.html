@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login — DSAViz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">DSA Visualizer</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="linked-list.html">Linked List</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="queue.html">Queue</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right"></div>
+  <button class="theme-btn" id="theme-toggle" style="margin-left:8px">☾</button>
+</nav>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-logo">DSA Visualizer</div>
+    <div class="login-sub">track your progress, earn badges, build streaks</div>
+
+    <div class="auth-tabs">
+      <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+      <button class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign up</button>
+    </div>
+
+    <div class="alert" id="alert"></div>
+
+    <!-- Login -->
+    <div class="form-section active" id="section-login">
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="login-email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="login-password" placeholder="••••••••"/>
+      </div>
+      <button class="form-btn" id="btn-login" onclick="doLogin()">Login</button>
+      <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:14px">
+        No account? <a href="#" onclick="switchTab('signup')" style="color:var(--text-light)">Sign up free</a>
+      </p>
+    </div>
+
+    <!-- Signup -->
+    <div class="form-section" id="section-signup">
+      <div class="form-group">
+        <label class="form-label">Full name</label>
+        <input class="form-input" type="text" id="signup-name" placeholder="Your name"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" id="signup-email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input class="form-input" type="password" id="signup-password" placeholder="Min 6 characters"/>
+      </div>
+      <button class="form-btn" id="btn-signup" onclick="doSignup()">Create Account</button>
+      <p style="text-align:center;font-size:12px;color:var(--text-muted);margin-top:14px">
+        Already have an account? <a href="#" onclick="switchTab('login')" style="color:var(--text-light)">Login</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">DSA Visualizer — Learn Algorithms Step by Step</footer>
+<script src="js/main.js"></script>
+<script>
+function switchTab(tab) {
+  document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+  document.getElementById('tab-signup').classList.toggle('active', tab === 'signup');
+  document.getElementById('section-login').classList.toggle('active', tab === 'login');
+  document.getElementById('section-signup').classList.toggle('active', tab === 'signup');
+  hideAlert();
+}
+
+function showAlert(msg, type) {
+  const el = document.getElementById('alert');
+  el.textContent = msg;
+  el.className = 'alert show alert-' + type;
+}
+function hideAlert() {
+  document.getElementById('alert').className = 'alert';
+}
+
+async function doLogin() {
+  const email    = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  if (!email || !password) { showAlert('Please fill in all fields.', 'error'); return; }
+
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'Logging in...';
+
+  try {
+    const res  = await fetch('http://localhost:5000/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Login failed');
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    showAlert('Login successful! Redirecting...', 'success');
+    setTimeout(() => location.href = 'index.html', 700);
+  } catch (e) {
+    showAlert(e.message, 'error');
+    btn.disabled = false; btn.textContent = 'Login';
+  }
+}
+
+async function doSignup() {
+  const name     = document.getElementById('signup-name').value.trim();
+  const email    = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  if (!name || !email || !password) { showAlert('Please fill in all fields.', 'error'); return; }
+  if (password.length < 6) { showAlert('Password must be at least 6 characters.', 'error'); return; }
+
+  const btn = document.getElementById('btn-signup');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+
+  try {
+    const res  = await fetch('http://localhost:5000/api/auth/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password })
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || 'Signup failed');
+    localStorage.setItem('token', data.token);
+    localStorage.setItem('user', JSON.stringify(data.user));
+    showAlert('Account created! Redirecting...', 'success');
+    setTimeout(() => location.href = 'index.html', 700);
+  } catch (e) {
+    showAlert(e.message, 'error');
+    btn.disabled = false; btn.textContent = 'Create Account';
+  }
+}
+
+// Enter key support
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  document.getElementById('section-login').classList.contains('active') ? doLogin() : doSignup();
+});
+
+// Check URL param
+if (new URLSearchParams(location.search).get('tab') === 'signup') switchTab('signup');
+</script>
+</body>
+</html>

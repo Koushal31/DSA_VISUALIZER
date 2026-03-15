@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DSAViz - Learn Data Structures & Algorithms</title>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    .hero { max-width: 720px; margin: 64px auto 0; padding: 0 24px; text-align: center; }
+    .hero h1 { font-size: 36px; font-weight: 600; letter-spacing: -0.5px; margin-bottom: 14px; }
+    .hero p  { font-size: 15px; color: var(--text-light); line-height: 1.75; margin-bottom: 28px; }
+    .hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+    .cards { max-width: 900px; margin: 60px auto 0; padding: 0 24px; }
+    .cards h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .topic-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+      display: block; transition: border-color 0.15s, background 0.15s;
+    }
+    .topic-card:hover { border-color: var(--border-dark); background: var(--gray-50); }
+    .topic-card-title { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+    .topic-card-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 12px; }
+    .topic-pills { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 12px; }
+    .pill { font-size: 10px; font-family: var(--mono); padding: 2px 7px; border: 1px solid var(--border); border-radius: 99px; color: var(--text-muted); }
+    .topic-link { font-size: 12px; color: var(--text-light); }
+
+    .how { max-width: 900px; margin: 52px auto 0; padding: 0 24px 80px; }
+    .how h2 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+    .how-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .how-step {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-lg); padding: 18px;
+    }
+    .how-num  { font-family: var(--mono); font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+    .how-title { font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+    .how-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+    @media (max-width: 720px) {
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+      .how-steps  { grid-template-columns: 1fr; }
+      .hero h1    { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">DSA Visualizer</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="linked-list.html">Linked List</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="queue.html">Queue</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right"></div>
+  <button class="theme-btn" id="theme-toggle" style="margin-left:8px" title="Toggle theme">☾</button>
+</nav>
+
+<section class="hero fade-in">
+  <h1>Learn DSA visually</h1>
+  <p>Watch sorting algorithms run step by step. Interact with linked lists,<br/>stacks, and queues. Follow the code line by line.</p>
+  <div class="hero-btns">
+    <a href="sorting.html" class="btn btn-dark btn-lg">Start Visualizing</a>
+    <a href="login.html?tab=signup" class="btn btn-lg">Create Account</a>
+  </div>
+</section>
+
+<section class="cards">
+  <h2>Topics</h2>
+  <div class="cards-grid">
+    <a href="sorting.html" class="topic-card">
+      <div class="topic-card-title">Sorting</div>
+      <div class="topic-card-desc">Watch arrays get sorted with animated bars and code highlighting.</div>
+      <div class="topic-pills">
+        <span class="pill">bubble</span>
+        <span class="pill">merge</span>
+        <span class="pill">quick</span>
+        <span class="pill">+2</span>
+      </div>
+      <div class="topic-link">Explore →</div>
+    </a>
+    <a href="linked-list.html" class="topic-card">
+      <div class="topic-card-title">Linked List</div>
+      <div class="topic-card-desc">Insert, delete, search, and reverse — see pointer updates live.</div>
+      <div class="topic-pills">
+        <span class="pill">append</span>
+        <span class="pill">remove</span>
+        <span class="pill">reverse</span>
+      </div>
+      <div class="topic-link">Explore →</div>
+    </a>
+    <a href="stack.html" class="topic-card">
+      <div class="topic-card-title">Stack</div>
+      <div class="topic-card-desc">LIFO data structure — push, pop and peek with animations.</div>
+      <div class="topic-pills">
+        <span class="pill">push</span>
+        <span class="pill">pop</span>
+        <span class="pill">peek</span>
+      </div>
+      <div class="topic-link">Explore →</div>
+    </a>
+    <a href="queue.html" class="topic-card">
+      <div class="topic-card-title">Queue</div>
+      <div class="topic-card-desc">FIFO structure — enqueue from rear, dequeue from front.</div>
+      <div class="topic-pills">
+        <span class="pill">enqueue</span>
+        <span class="pill">dequeue</span>
+        <span class="pill">peek</span>
+      </div>
+      <div class="topic-link">Explore →</div>
+    </a>
+  </div>
+</section>
+
+<section class="how">
+  <h2>How it works</h2>
+  <div class="how-steps">
+    <div class="how-step">
+      <div class="how-num">01</div>
+      <div class="how-title">Pick an algorithm</div>
+      <div class="how-desc">Choose from the dropdown — Bubble, Merge, Quick Sort, or a data structure.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">02</div>
+      <div class="how-title">Enter your data</div>
+      <div class="how-desc">Type any numbers or click Random to generate a fresh array.</div>
+    </div>
+    <div class="how-step">
+      <div class="how-num">03</div>
+      <div class="how-title">Watch it run</div>
+      <div class="how-desc">Press Run. Control the speed, pause at any step, follow the code.</div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">DSA Visualizer — Learn Algorithms Step by Step</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Queue — DSAViz</title>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a class="nav-logo" href="index.html">DSA Visualizer</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="sorting.html">Sorting</a></li>
+    <li><a href="linked-list.html">Linked List</a></li>
+    <li><a href="stack.html">Stack</a></li>
+    <li><a href="queue.html">Queue</a></li>
+  </ul>
+  <div class="nav-right" id="nav-right"></div>
+  <button class="theme-btn" id="theme-toggle" style="margin-left:8px">☾</button>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div>
+      <h1>Queue</h1>
+      <p>First In, First Out (FIFO) — items enter from the rear, leave from the front</p>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">
+      <span class="badge">Enqueue: O(1)</span>
+      <span class="badge">Dequeue: O(1)</span>
+      <span class="badge">Peek: O(1)</span>
+      <span class="badge">Space: O(n)</span>
+    </div>
+  </div>
+</div>
+
+<div class="controls-bar">
+  <div class="controls-inner">
+    <span class="ctrl-label">Value</span>
+    <input class="ctrl-input" type="text" id="queue-val" placeholder="e.g. 42" maxlength="6" style="width:90px"/>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-dark btn-sm" onclick="queueEnqueue()">Enqueue</button>
+    <button class="btn btn-sm" onclick="queueDequeue()">Dequeue</button>
+    <button class="btn btn-sm" onclick="queuePeek()">Peek</button>
+    <div class="ctrl-sep"></div>
+    <button class="btn btn-sm" onclick="queueReset()">↺ Reset</button>
+  </div>
+</div>
+
+<div class="page-body">
+  <div class="two-col">
+    <!-- Left: queue visual -->
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">Queue (FIFO)</span>
+        <span class="badge" id="queue-size">3 items</span>
+      </div>
+      <div class="queue-visual">
+        <div class="queue-labels" style="width:100%;padding:0 4px">
+          <span style="font-size:11px;color:var(--text-muted)">← Dequeue (front)</span>
+          <span style="font-size:11px;color:var(--text-muted)">Enqueue (rear) →</span>
+        </div>
+        <div class="queue-items" id="queue-items"></div>
+      </div>
+      <div class="status-line" id="queue-status">Queue ready</div>
+    </div>
+
+    <!-- Right: code + complexity -->
+    <div class="right">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Pseudocode</span>
+          <span class="badge" id="queue-op">enqueue</span>
+        </div>
+        <div class="code-block" id="queue-code"></div>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Time Complexity</span></div>
+        <table class="info-table">
+          <tr><td>Enqueue</td><td>O(1)</td></tr>
+          <tr><td>Dequeue</td><td>O(1)</td></tr>
+          <tr><td>Peek</td><td>O(1)</td></tr>
+          <tr><td>Search</td><td>O(n)</td></tr>
+          <tr><td>Space</td><td>O(n)</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <div class="card-header"><span class="card-title">Real-world uses</span></div>
+        <div style="padding:12px 14px;display:flex;flex-direction:column;gap:8px">
+          <div style="font-size:13px"><strong>CPU scheduling</strong> — processes wait in a queue</div>
+          <div style="font-size:13px"><strong>Print spooler</strong> — jobs print in the order they arrive</div>
+          <div style="font-size:13px"><strong>BFS traversal</strong> — graph breadth-first search uses a queue</div>
+          <div style="font-size:13px"><strong>Web server</strong> — incoming requests are queued</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="card mt-16">
+    <div class="card-header"><span class="card-title">How Queues Work</span></div>
+    <div class="how-summary">A queue is a linear structure following FIFO — First In, First Out. Think of a line at a checkout counter. The first person to arrive is the first to be served.</div>
+    <div class="how-list">
+      <div class="how-item"><div class="how-num">1</div><div class="how-text"><strong>Enqueue:</strong> Add an item to the rear of the queue. O(1) — no shifting needed.</div></div>
+      <div class="how-item"><div class="how-num">2</div><div class="how-text"><strong>Dequeue:</strong> Remove and return the front item. O(1) — the oldest item is processed first.</div></div>
+      <div class="how-item"><div class="how-num">3</div><div class="how-text"><strong>Peek:</strong> View the front item without removing it. O(1) — check what's next without changing the queue.</div></div>
+      <div class="how-item"><div class="how-num">4</div><div class="how-text"><strong>Overflow / Underflow:</strong> Enqueueing to a full queue or dequeueing from empty are errors to guard against.</div></div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">DSA Visualizer — Learn Algorithms Step by Step</footer>
+<script src="js/main.js"></script>
+<script src="js/queue.js"></script>
+</body>
+</html>
