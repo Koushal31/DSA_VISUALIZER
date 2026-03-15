@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 });
 
 // Serve static files from frontend
-app.use(express.static('../frontend'));
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Connect to MongoDB
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/dsaviz';
